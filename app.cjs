@@ -21,10 +21,8 @@ app.use(express.static(path.join(__dirname , "./Frontend/dist")))
 // app.use('./api/v1/bookings' , bookingRoutes )
 
 app.get("*" , (req, res)=>{
-    res.sendFile(path.join(__dirname , "./Frontend/dist/index.html")),
-    function(err){
-        res.status(500).send(err)
-    }
+    res.sendFile(path.join(__dirname , "./Frontend/dist/index.html"))
+   
 })
 app.all('*',( req, res, next) => {
  
