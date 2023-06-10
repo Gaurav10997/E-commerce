@@ -10,9 +10,10 @@ const bookingRoutes = require("./routes/bookingRoutes.cjs")
 const globalErrorHandler = require('./controllers/errorController.cjs')
 const app = express();
 app.use(cors());
-
+const assetsRouter = require("./routes/assets_router.cjs");
 app.use(express.json());
 app.use(morgan('dev'));
+app.use("/src", assetsRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/carts', cartRouter);
