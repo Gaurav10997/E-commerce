@@ -3,8 +3,10 @@ import '../Categorywise/Categorywise.css'
 import Categorywise from '../Categorywise/Categorywise';
 import { useEffect,useState } from 'react';
 import { Route, useParams } from 'react-router-dom';
+
 function Checker() {
     let { id } = useParams();
+    const url = "https//localhost:1200"
     const [dataTemp , setDataTemp ] = useState([])
     const [isLoading , setisLoading] = useState(true)
     const [isInitialRender, setIsInitialRender] = useState(true);
@@ -15,7 +17,7 @@ function Checker() {
       }
 
 
-      fetch(`/api/v1/products/categories/${id}`)
+      fetch(`http://localhost:1200/api/v1/products/categories/${id}`)
 
       .then((res)=>res.json())
       .then(data=>{

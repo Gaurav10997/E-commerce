@@ -4,10 +4,10 @@ import { useEffect , useState } from 'react';
 
 function Categories(props) {
     const [categories, setCategories] = useState([]);
-  
+    const url = "https//localhost:1200"
     useEffect(() => {
 
-      fetch("/api/v1/products/categories")
+      fetch(`http://localhost:1200/api/v1/products/categories`)
 
         .then(res => res.json())
         .then(data => {

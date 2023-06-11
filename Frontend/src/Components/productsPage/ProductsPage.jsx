@@ -8,8 +8,9 @@ import Review from './Review'
 const ProductsPage = () => {
   const [obj , setObj] = useState({})
   let {id} = useParams()
+  const url = "https//localhost:1200"
   useEffect(()=>{
-    fetch(`/api/v1/products/${id}`)
+    fetch(`$http://localhost:1200/api/v1/products/${id}`)
     .then((res)=>res.json())
     .then((data)=>setObj(data.data.product[0]))
 },[id])
