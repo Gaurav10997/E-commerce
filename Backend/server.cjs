@@ -1,9 +1,10 @@
+require('dotenv').config()
 const app = require('./app.cjs')
 const path = require('path')
 const express = require('express')
 
 
-const PORT_NO = process.env.PORT || 1200;
+const PORT_NO = process.env.PORT||1200 ;
 
 
 // app.use(express.static(path.join(__dirname, "Frontend","dist")));

@@ -13,6 +13,8 @@ app.use(cors());
 const assetsRouter = require("./routes/assets_router.cjs");
 app.use(express.json());
 app.use(morgan('dev'));
+
+// ALL the  Routers 
 app.use("/src", assetsRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);

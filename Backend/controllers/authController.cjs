@@ -1,18 +1,22 @@
+require('dotenv').config()
 const jwt = require('jsonwebtoken')
 const { promisify } = require('util')
 const User = require('./../modals/userModel.cjs')
 const catchAsync = require('../utils/catchAsync.cjs')
 const AppError = require('../utils/appError.cjs')
+
+
+
 const signToken = id =>{
     return jwt.sign({
         id
-    },'processenvjwtsecret',{
-        expiresIn: '1d'
+    },process.env.JWT_PASSWORD,{
+        expiresIn: process.env.JWT_EXPIRESIN
     })
 }
+
+
  exports.signup = catchAsync(async(req,res,next) => {
-    // problem is that everyone can use to login and signup using admin 
-    // const newUser = await User.create(req.body);
     const newUser = await(User.create({
         username: req.body.username,
         email: req.body.email,
@@ -26,7 +30,7 @@ const signToken = id =>{
         status: 'success' , 
         token,
         data: { 
-            tour: newUser
+            newUser
             }
         });
         
@@ -35,7 +39,8 @@ const signToken = id =>{
 exports.login = catchAsync(async(req, res, next) => {
     const { email, password } = req.body;
 
-    // check if email and password esidet 
+    // check if email and password exist
+
     if (!email || !password) {
        return next(new AppError('Please provide email and password', 400));
     }; 
@@ -43,7 +48,8 @@ exports.login = catchAsync(async(req, res, next) => {
     //check if user exists && password is correct 
 
     const user = await User.findOne({email}).select('+password')
-    const correct = await user?.correctPassword(password,user.password)
+    
+    const correct = await user.correctPassword(password,user.password)
     if(!user || !correct){
         return next(new AppError('Invalid email or password', 401));
     }
