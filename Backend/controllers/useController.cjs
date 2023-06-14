@@ -1,6 +1,10 @@
 const User = require('../modals/userModel.cjs')
 const catchAsync = require('../utils/catchAsync.cjs')
 const AppError = require('../utils/appError.cjs')
+const multer = require('multer');
+
+
+const upload = multer({dest:'public/img/users'})
 
 const filterObj = (obj , ...allowedFields) =>{
   const newObj = {};
@@ -26,6 +30,7 @@ exports.getAllusers = catchAsync(async (req, res,next) => {
 
 exports.updateMe = catchAsync(async(req,res,next) =>{
   // craete error if user posts paword data 
+  console.log(req.file)
   if(req.body.password || req.body.passwordConfirm){
     return next (new AppError("This route is nor for changing The PassWord, please use Update Password",400))
   }

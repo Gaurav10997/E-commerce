@@ -5,14 +5,15 @@ const authController = require('../controllers/authController.cjs')
 const userController = require('../controllers/useController.cjs');
 const cartController = require('../controllers/cartController.cjs')
 
+
 // Router.get('/' ,  
 // authController.protect, 
 // userController.getAllusers );
-console.log(userController.getUser);
-console.log(authController.protect);
+// console.log(userController.getUser);
+// console.log(authController.protect);
 Router.
 route("/").
-get( authController.protect )
+get( authController.protect, userController.getUser )
 
 // Router
 // .route('/addToCart/:productId')
@@ -21,7 +22,7 @@ get( authController.protect )
 
 
 
-Router.patch('/updateme' , authController.protect , userController.updateMe)
+// Router.patch('/updateme' ,  authController.protect , upload.single('photo') , userController.updateMe)
 
 Router.post('/signup', authController.signup)
 Router.post('/login', authController.login)

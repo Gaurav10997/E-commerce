@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import { useSelector , useDispatch } from 'react-redux';
 import {fetchAsync} from "./../../redux/features/cartSlice"
 import CartProductCard from './CartProductCard';
@@ -9,10 +9,34 @@ import CartTotal from './CartTotal';
 
 function CartPage() {
   const carts = useSelector((state) => state.cart.items);
-  console.log(carts)
   const status = useSelector((state) => state.cart.status);
+  const navigate = useNavigate()
+  const [order,setOrder] = useState(false);
+  console.log(order)
+  function toggleOrder(){
+    setOrder((prev)=>!prev)
+    setTimeout(()=>{
+      navigate('/')
+    },3000)
+   
+  }
+ 
+
   const [cart , setCart] = useState([]);
+  const [ProductId , setProductId] = useState([]);
+  // console.log(cart);
+  useEffect(()=>{
+    carts.forEach((el)=>setProductId([...ProductId , el.product._id]))
+  },[])
+  
+  console.log(ProductId);
+
   const cartLength = carts.length;
+
+  if(order){
+    return <h1 className='Loader' style={{textAlign:"center"}}>Order Palced Succesfully </h1>
+  }
+
 
   if ( status === "loading" || !carts  || carts.length === 0) {
     // Render a loading state or an error message
@@ -35,14 +59,14 @@ function CartPage() {
 
 
   return (
-    <div className="cartPage">
+ <div className="cartPage">
       <div className="cartPage__main">
         <h1>Product</h1>
         <h1>Price</h1>
         <h1>Quantity</h1>
         <h1>Subtotal</h1>
       </div>
-
+      
       { carts?.map((cart, index) => (
     <CartProductCard
       key={index}
@@ -53,13 +77,16 @@ function CartPage() {
       itemId={cart?.product?._id}
     />
    
-  ))
+  )
+  
+  
+  )
   
   }
 
 
       <div className="cartpagebtm">
-        <CartTotal subtotal={subtotal } />
+        <CartTotal subtotal={subtotal }  toggleOrder={toggleOrder}/>
 
       </div>
     </div>

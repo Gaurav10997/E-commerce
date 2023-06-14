@@ -1,25 +1,39 @@
-import React, {useState}from 'react'
+import React, {useState , createContext , useContext} from 'react'
 
-const AuthContext = React.createContext({
-  token:"",
+export const TokenContext = createContext();
+export const IsLoggedInContext = createContext();
+export const LoginHandlerContext = createContext();
+export const LogoutHandlerContext = createContext();
 
-  isLoggedIn:true,
-  login:(token)=>{
-  },
+export function useToken(){
+  return useContext(TokenContext)
+} 
 
-  logout:()=>{}
+export function useIsLogin(){
+  return useContext(IsLoggedInContext)
+}
+export function useLoginHandler(){
+  return useContext(LoginHandlerContext)
+} 
 
-})
- export const AuthContextProvider = (props) =>{
-  const localtoken = localStorage.getItem('token')
-  const [token,setToken] = useState(localtoken);
+export function useLogoutHandler(){
+  return useContext(LogoutHandlerContext)
+} 
+
+ 
+
+ // eslint-disable-next-line react/prop-types
+ export const AuthContextProvider = ({ children }) => {
+
+  const [token,setToken] = useState("");
 
   const userIsLoggedIn = !!token;
 
   const loginHandler = (token) =>{
     setToken(token);
-
-    isLoggedIn=truelocalStorage.setItem('token',token)
+    
+    isLoggedIn=true
+    localStorage.setItem('token',token)
 
   }
   const logoutHandler = () =>{
@@ -27,15 +41,23 @@ const AuthContext = React.createContext({
     localStorage.removeItem('token')
   }
 
-  const contextValue = {
-    token:token,
-    isLoggedIn:userIsLoggedIn,
-    login:loginHandler,
-    logout:logoutHandler
-  }
-  return <AuthContext.Provider value={contextValue}>
-    {props.children}
-  </AuthContext.Provider>
+
+
+  return (
+
+      <TokenContext.Provider value ={token}>
+        <IsLoggedInContext.Provider value={userIsLoggedIn} >
+          <LoginHandlerContext.Provider value={loginHandler} >
+            <LogoutHandlerContext.Provider value={logoutHandler} >
+              {children}
+            </LogoutHandlerContext.Provider>
+          </LoginHandlerContext.Provider>
+        </IsLoggedInContext.Provider>
+      </TokenContext.Provider>
+
+  ) 
+  
+ 
  }
 
- export default AuthContext;
+//  export default AuthContext;

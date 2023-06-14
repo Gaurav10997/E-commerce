@@ -6,6 +6,7 @@ const userRouter = require('./routes/userRoutes.cjs');
 const productRouter = require('./routes/productroutes.cjs')
 const cartRouter = require('./routes/cartRoutes.cjs')
 const AppError = require('./utils/appError.cjs')
+const orderRoutes = require('./routes/orderRoutes.cjs')
 const bookingRoutes = require("./routes/bookingRoutes.cjs")
 const globalErrorHandler = require('./controllers/errorController.cjs')
 const app = express();
@@ -16,6 +17,7 @@ app.use(morgan('dev'));
 
 // ALL the  Routers 
 app.use("/src", assetsRouter);
+app.use('/api/v1/orders' , orderRoutes)
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);
 app.use('/api/v1/carts', cartRouter);

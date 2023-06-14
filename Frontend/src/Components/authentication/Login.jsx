@@ -1,12 +1,19 @@
 import React, { useState,useContext , useEffect} from 'react'
-import AuthContext from '../../store/AuthContext';
+// import { loginHandler } from '../../store/AuthContext';
+import { LoginHandlerContext } from '../../store/AuthContext';
+import { useToken } from '../../store/AuthContext';
 import "./Login.css"
 
 
 
 function Login() {
-  const url = "https//localhost:1200"
-  const authCtx = useContext(AuthContext)
+  // const loginHandler = useLoginHandler()
+  // console.log(useLoginHandler);
+  const token = useToken();
+  console.log(token)
+ const login = useContext(LoginHandlerContext)
+//  console.log();
+  // const LoginHandlerContext = useContext(loginHandler)
   const [newUser, setNewUser] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [formData , setFormData] = useState({
@@ -28,7 +35,7 @@ function Login() {
   const AddUsers = async (authname, userInfo) => {
     try {
 
-      const response = await fetch(`http://localhost:1200//api/v1/users/${authname}`, {
+      const response = await fetch(`http://localhost:1200/api/v1/users/${authname}`, {
 
         method: "POST",
         body: JSON.stringify(userInfo),
@@ -39,7 +46,7 @@ function Login() {
       console.log(response);
       if (response.ok) {
         const data = await response.json();
-        authCtx.login(data.token);
+        login(data.token);
       } else if(!response.ok) {
         const data = await response.json();
         throw new Error(data.message || "An error occurred while processing your request.");

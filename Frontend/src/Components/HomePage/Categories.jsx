@@ -3,6 +3,7 @@ import Smallcard from '../cards/smallcard';
 import { useEffect , useState } from 'react';
 
 function Categories(props) {
+
     const [categories, setCategories] = useState([]);
     const url = "https//localhost:1200"
     useEffect(() => {

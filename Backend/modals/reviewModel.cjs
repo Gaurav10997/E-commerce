@@ -3,10 +3,12 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema({
     product:{
         type: mongoose.Schema.Types.ObjectId,
+        required:'true',
         ref:'Product'
     },
     user:{
         type:mongoose.Schema.ObjectId,
+        required:'true',
         ref:'User'
     }
     ,
@@ -31,15 +33,29 @@ const reviewSchema = new mongoose.Schema({
 reviewSchema.set('toObject',{virtuals:true})
 reviewSchema.set('toJSON',{virtuals:true})
 reviewSchema.pre('find', function() {
+    // this.populate({
+    //     path:'product',
+    //     select:'name description _id'
+    // })
     this.populate({
-        path:'product',
-        select:'name description _id'
-    }).populate({
         path:"user",
         select:"username"
     });
   });
 
+// reviewSchema.statics.calcAverageRating = function(productId){
+//     this.aggregate([{
+//         $match:{product:productId}
+//     },{
+//         $group:{
+//             _id:'product'
+//             nRating:{                  }
+//         }
+//     }
+       
+//     ])
+
+// }
 const Review = mongoose.model('Review' , reviewSchema)
 
 module.exports = Review

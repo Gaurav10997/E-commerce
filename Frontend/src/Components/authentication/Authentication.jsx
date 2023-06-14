@@ -1,14 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Login from './Login'
+import Me from '../me/me'
+import { useIsLogin, useToken } from '../../store/AuthContext'
 function Authentication() {
+  const login = useIsLogin()
+  console.log(login);
+  // const token = useToken()
+  console.log(Login)
   return (
     <>
     <hr />
-    <br />
-    <br />
-    <br />
-    <br /><br />
-   <Login></Login>
+
+  {/* {login && <Me></Me> || !login && <Login/>} */}
+  <Me></Me>
+  
     </>
     
   )

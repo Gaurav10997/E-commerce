@@ -12,11 +12,11 @@ import './index.css'
 ReactDOM.createRoot(document.getElementById('root')).render(
 
     <BrowserRouter>
+     <AuthContextProvider>
       <Provider store={store} >
-        <AuthContextProvider>
-          <App />
-        </AuthContextProvider>
+          <App /> 
       </Provider>
+    </AuthContextProvider>
 
     </BrowserRouter>
 

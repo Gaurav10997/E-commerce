@@ -1,17 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
 import "./me.css"
 function Me() {
+    const token = localStorage.getItem('token')
+    const [userInfo , setUserInfo] =  useState({})
+    useEffect(()=>{
+        fetch('http://localhost:1200/api/v1/users/',{
+            method:"GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+        })
+        .then(res=>res.json())
+        .then(data=>setUserInfo(data.data.user))
+    },[])
+    
+
+
   return (
     <>
     
-    <br />
-    <br />
-    <br />
-    <br />
-    
    <div className="me__main">
-
             <div className="me__left">
+                
+                <h2 style={{color:"skyblue"}} >Good Morning {userInfo.username}</h2>
                 <div className="menu__items">
                     <div className="menu__items__icon">
                         <h2>SETTINGS</h2>
